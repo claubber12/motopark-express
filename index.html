@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MotoPark Express</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>MotoPark Express</h1>
+    <form id="parkingForm">
+      <input type="text" id="placa" placeholder="Placa da moto" required />
+      <input type="text" id="contato" placeholder="Contato (WhatsApp)" required />
+      <button type="submit">Registrar Entrada</button>
+    </form>
+    <div id="saidaSection" class="hidden">
+      <button id="saidaBtn">Registrar Saída</button>
+    </div>
+    <div id="ticket" class="hidden"></div>
+    <div id="buttons" class="hidden">
+      <a id="whatsappBtn" href="#" target="_blank">Enviar por WhatsApp</a>
+      <button id="resetBtn">Novo Registro</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
