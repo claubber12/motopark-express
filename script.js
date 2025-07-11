@@ -1,6 +1,1 @@
-
-window.onload = () => {
-  const qrContainer = document.getElementById("qrcode");
-  qrContainer.innerHTML = "";
-  new QRCode(qrContainer, "placaABC1234_ticket1");
-};
+// Vazio no index, funcionalidades estão nas outras telas
