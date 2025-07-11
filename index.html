@@ -1,40 +1,14 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MotoPark Express</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">
-      <img src="motopark-logo.png" alt="MotoPark Logo"/>
-      <h1>MotoPark Express</h1>
-    </div>
-    <div id="main-menu">
-      <button onclick="goToEntrada()">Registrar Entrada</button>
-      <button onclick="goToSaida()">Registrar Saída</button>
-    </div>
-    <div id="entrada-screen" class="hidden">
-      <h2>Registro de Entrada</h2>
-      <input type="text" id="nomeCliente" placeholder="Nome do Cliente" required/>
-      <input type="text" id="placa" placeholder="Placa da Moto" required/>
-      <input type="text" id="whatsapp" placeholder="Contato WhatsApp" required/>
-      <button onclick="registrarEntrada()">Registrar Entrada</button>
-    </div>
-    <div id="saida-screen" class="hidden">
-      <h2>Escanear QR Code</h2>
-      <div id="reader" style="width: 300px; margin: auto;"></div>
-    </div>
-    <div id="ticket-screen" class="hidden">
-      <h2>Recibo</h2>
-      <div id="ticket-info" class="recibo"></div>
-      <button id="btnEnviarWhatsApp">Enviar por WhatsApp</button>
-      <button onclick="voltarMenu()">Voltar ao Menu</button>
-    </div>
-  </div>
+  <img src="motopark-logo.png" alt="Logo" style="width:100px;">
+  <div id="qrcode"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
