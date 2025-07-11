@@ -5,22 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MotoPark Express</title>
   <link rel="stylesheet" href="style.css"/>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 <body>
   <div class="container">
-    <h1>MotoPark Express</h1>
-    <form id="parkingForm">
-      <input type="text" id="placa" placeholder="Placa da moto" required />
-      <input type="text" id="contato" placeholder="Contato (WhatsApp)" required />
-      <button type="submit">Registrar Entrada</button>
-    </form>
-    <div id="saidaSection" class="hidden">
-      <button id="saidaBtn">Registrar Saída</button>
+    <div class="logo">
+      <img src="motopark-logo.png" alt="MotoPark Logo"/>
+      <h1>MotoPark Express</h1>
     </div>
-    <div id="ticket" class="hidden"></div>
-    <div id="buttons" class="hidden">
-      <a id="whatsappBtn" href="#" target="_blank">Enviar por WhatsApp</a>
-      <button id="resetBtn">Novo Registro</button>
+    <div id="main-menu">
+      <button onclick="goToEntrada()">Registrar Entrada</button>
+      <button onclick="goToSaida()">Registrar Saída</button>
+    </div>
+    <div id="entrada-screen" class="hidden">
+      <h2>Registro de Entrada</h2>
+      <input type="text" id="nomeCliente" placeholder="Nome do Cliente" required/>
+      <input type="text" id="placa" placeholder="Placa da Moto" required/>
+      <input type="text" id="whatsapp" placeholder="Contato WhatsApp" required/>
+      <button onclick="registrarEntrada()">Registrar Entrada</button>
+    </div>
+    <div id="saida-screen" class="hidden">
+      <h2>Escanear QR Code</h2>
+      <div id="reader" style="width: 300px; margin: auto;"></div>
+    </div>
+    <div id="ticket-screen" class="hidden">
+      <h2>Recibo</h2>
+      <div id="ticket-info" class="recibo"></div>
+      <button id="btnEnviarWhatsApp">Enviar por WhatsApp</button>
+      <button onclick="voltarMenu()">Voltar ao Menu</button>
     </div>
   </div>
   <script src="script.js"></script>
