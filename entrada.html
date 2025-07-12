@@ -1,21 +1,54 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrada | MotoPark Express</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script-entrada.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrar Entrada</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header><a href="index.html">← Menu</a></header>
-  <h1>Registrar Entrada</h1>
-  <form id="entradaForm">
-    <input type="text" id="nome" placeholder="Nome do Cliente" required>
-    <input type="text" id="placa" placeholder="Placa da Moto" required>
-    <input type="tel"  id="whats" placeholder="WhatsApp" required>
-    <button type="submit">Gerar Tíquete</button>
-  </form>
-  <div id="recibo" class="recibo"></div>
+  <div class="container">
+    <h1>Registrar Entrada</h1>
+    <input type="text" id="cliente" placeholder="Nome do Cliente"/><br/>
+    <input type="text" id="placa" placeholder="Placa da Moto"/><br/>
+    <input type="text" id="whatsapp" placeholder="WhatsApp do Cliente"/><br/>
+    <button onclick="registrarEntrada()">Registrar</button>
+    <div id="ticket"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function registrarEntrada() {
+      const cliente = document.getElementById('cliente').value;
+      const placa = document.getElementById('placa').value;
+      const whatsapp = document.getElementById('whatsapp').value;
+      const entrada = new Date().toLocaleString();
+      const ticketId = Date.now();
+
+      const dados = {
+        id: ticketId,
+        cliente,
+        placa,
+        whatsapp,
+        entrada
+      };
+      localStorage.setItem(`ticket-${ticketId}`, JSON.stringify(dados));
+
+      const conteudo = `ID: ${ticketId}\nPlaca: ${placa}\nEntrada: ${entrada}`;
+      QRCode.toDataURL(conteudo, function (err, url) {
+        document.getElementById('ticket').innerHTML = `
+          <p><strong>Entrada registrada!</strong></p>
+          <img src="${url}" alt="QR Code" style="width:150px"/><br/>
+          <button onclick="enviarWhatsApp('${whatsapp}', \`${conteudo}\`)">Enviar Tíquete</button>
+        `;
+      });
+    }
+
+    function enviarWhatsApp(numero, mensagem) {
+      const texto = encodeURIComponent(mensagem);
+      const link = `https://wa.me/55${numero}?text=${texto}`;
+      window.open(link, '_blank');
+    }
+  </script>
 </body>
 </html>

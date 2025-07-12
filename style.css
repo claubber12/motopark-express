@@ -1,38 +1,33 @@
+
 body {
-  font-family: sans-serif;
   background-color: #111;
   color: white;
+  font-family: sans-serif;
   text-align: center;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
 }
-button {
-  background-color: #007BFF;
-  color: white;
-  padding: 1rem 2rem;
-  margin: 1rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-input {
-  padding: 0.8rem;
-  margin: 0.5rem;
-  width: 80%;
-  max-width: 400px;
-  border-radius: 5px;
-  border: none;
+.container {
+  padding: 20px;
 }
 .logo {
   width: 100px;
-  margin-bottom: 1rem;
+  margin: 20px auto;
+  display: block;
 }
-.recibo-box {
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  background: #222;
-  border-radius: 10px;
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 15px 30px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-a {
-  text-decoration: none;
+footer {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #ccc;
 }

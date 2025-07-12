@@ -1,15 +1,72 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Saída | MotoPark Express</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script-saida.js"></script>
+  <title>Registrar Saída</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header><a href="index.html">← Menu</a></header>
-  <h1>Registrar Saída</h1>
-  <p>A funcionalidade será implementada nesta versão.</p>
+  <div class="container">
+    <h1>Registrar Saída</h1>
+    <video id="preview" width="300" height="200"></video><br/>
+    <div id="ticket"></div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+  <script>
+    const video = document.getElementById('preview');
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(function(stream) {
+      video.srcObject = stream;
+      video.setAttribute("playsinline", true);
+      video.play();
+      requestAnimationFrame(tick);
+    });
+
+    function tick() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, canvas.width, canvas.height);
+        if (code) {
+          processarSaida(code.data);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function processarSaida(dados) {
+      const id = dados.split("\n")[0].split(": ")[1];
+      const ticket = JSON.parse(localStorage.getItem(`ticket-${id}`));
+      const saida = new Date();
+      const entrada = new Date(ticket.entrada);
+      const tempo = Math.ceil((saida - entrada) / (1000 * 60 * 60));
+      const valor = tempo <= 3 ? 5 : 5 + (tempo - 3) * 2;
+
+      document.getElementById('ticket').innerHTML = `
+        <p><strong>Tíquete</strong></p>
+        <p>Cliente: ${ticket.cliente}</p>
+        <p>Placa: ${ticket.placa}</p>
+        <p>Entrada: ${ticket.entrada}</p>
+        <p>Saída: ${saida.toLocaleString()}</p>
+        <p><strong>Tempo Total: ${tempo}h</strong></p>
+        <p><strong>Valor: R$ ${valor},00</strong></p>
+        <button onclick="enviarWhatsApp('${ticket.whatsapp}', 'Saída registrada! Valor: R$ ${valor},00')">Enviar</button>
+      `;
+
+      localStorage.removeItem(`ticket-${id}`);
+    }
+
+    function enviarWhatsApp(numero, mensagem) {
+      const texto = encodeURIComponent(mensagem);
+      const link = `https://wa.me/55${numero}?text=${texto}`;
+      window.open(link, '_blank');
+    }
+  </script>
 </body>
 </html>
